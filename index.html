@@ -56,38 +56,25 @@
   }
   .lang-switch {
     display: flex;
-    gap: 8px;
+    gap: 16px;
     margin-bottom: 24px;
+    font-size: 14px;
   }
-  .lang-switch button {
-    font-family: inherit;
-    font-size: 13px;
-    font-weight: 700;
-    padding: 8px 16px;
-    border-radius: 8px;
-    border: 1px solid #e5e5e5;
-    background: #fafafa;
-    color: #171717;
-    cursor: pointer;
-  }
-  .lang-switch button[aria-pressed="true"] {
-    background: #171717;
-    border-color: #171717;
-    color: #ffffff;
-  }
-  [data-lang-content="en"] {
-    display: none;
+  .lang-divider {
+    border: none;
+    border-top: 4px solid #171717;
+    margin: 56px 0 40px;
   }
 </style>
 </head>
 <body>
 
-<div class="lang-switch" role="group" aria-label="Language / 言語">
-  <button type="button" data-lang-button="ja" aria-pressed="true">日本語</button>
-  <button type="button" data-lang-button="en" aria-pressed="false">English</button>
-</div>
+<p class="lang-switch">
+  <a href="#ja">日本語</a>
+  <a href="#en">English</a>
+</p>
 
-<div data-lang-content="ja">
+<div id="ja">
 
 <h1>プライバシーポリシー</h1>
 <p class="updated">最終更新日: 2026年8月26日</p>
@@ -187,7 +174,9 @@
 
 </div>
 
-<div data-lang-content="en">
+<hr class="lang-divider" />
+
+<div id="en">
 
 <h1>Privacy Policy</h1>
 <p class="updated">Last updated: August 26, 2026</p>
@@ -292,44 +281,6 @@ you within the App of any material changes.
 </p>
 
 </div>
-
-<script>
-  (function () {
-    var buttons = document.querySelectorAll('[data-lang-button]');
-    var contents = document.querySelectorAll('[data-lang-content]');
-
-    function setLang(lang) {
-      contents.forEach(function (el) {
-        el.style.display = el.getAttribute('data-lang-content') === lang ? '' : 'none';
-      });
-      buttons.forEach(function (btn) {
-        btn.setAttribute('aria-pressed', String(btn.getAttribute('data-lang-button') === lang));
-      });
-      document.documentElement.lang = lang;
-      try {
-        localStorage.setItem('sleepyface-privacy-lang', lang);
-      } catch (e) {}
-    }
-
-    buttons.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        setLang(btn.getAttribute('data-lang-button'));
-      });
-    });
-
-    var initialLang = 'ja';
-    try {
-      var stored = localStorage.getItem('sleepyface-privacy-lang');
-      if (stored === 'ja' || stored === 'en') {
-        initialLang = stored;
-      } else if ((navigator.language || '').toLowerCase().indexOf('ja') !== 0) {
-        initialLang = 'en';
-      }
-    } catch (e) {}
-
-    setLang(initialLang);
-  })();
-</script>
 
 </body>
 </html>
